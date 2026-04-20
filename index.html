@@ -1,11 +1,121 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>API Full Stack Project</title>
-  </head>
-  <body>
-    <!-- You code goes here-->
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PopQuiz — Culture Trivia</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="app">
+
+    <!-- SPLASH SCREEN -->
+    <section id="splash" class="screen active">
+      <div class="splash-inner">
+        <div class="logo-ring">
+          <span class="logo-icon">🎬</span>
+        </div>
+        <h1>PopQuiz</h1>
+        <p class="tagline">Celebrity, music, movies & more. <br>Think you know it all?</p>
+        <div class="difficulty-selector">
+          <label>Difficulty</label>
+          <div class="pill-group" id="difficulty-pills">
+            <button class="pill" data-val="easy">Easy</button>
+            <button class="pill active" data-val="medium">Medium</button>
+            <button class="pill" data-val="hard">Hard</button>
+          </div>
+        </div>
+        <div class="amount-selector">
+          <label>Questions</label>
+          <div class="pill-group" id="amount-pills">
+            <button class="pill" data-val="5">5</button>
+            <button class="pill active" data-val="10">10</button>
+            <button class="pill" data-val="15">15</button>
+          </div>
+        </div>
+        <button id="start-btn" class="cta-btn">Start Quiz</button>
+      </div>
+    </section>
+
+    <!-- LOADING SCREEN -->
+    <section id="loading" class="screen">
+      <div class="loader-wrap">
+        <div class="spinner"></div>
+        <p>Fetching questions…</p>
+      </div>
+    </section>
+
+    <!-- QUIZ SCREEN -->
+    <section id="quiz" class="screen">
+      <header class="quiz-header">
+        <div class="progress-meta">
+          <span id="q-counter">Q 1 / 10</span>
+          <span id="score-live">Score: 0</span>
+        </div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+      </header>
+
+      <div class="question-card" id="question-card">
+        <div class="q-category" id="q-category">Entertainment</div>
+        <p class="q-text" id="q-text">Question goes here?</p>
+        <div class="answers-grid" id="answers-grid"></div>
+      </div>
+
+      <div class="feedback-overlay hidden" id="feedback-overlay">
+        <div class="feedback-box" id="feedback-box">
+          <span class="feedback-icon" id="feedback-icon"></span>
+          <p class="feedback-msg" id="feedback-msg"></p>
+          <button class="next-btn" id="next-btn">Next →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULTS SCREEN -->
+    <section id="results" class="screen">
+      <div class="results-inner">
+        <div class="trophy" id="trophy-emoji">🏆</div>
+        <h2 id="results-headline">Incredible!</h2>
+        <p class="results-sub" id="results-sub">You aced the quiz.</p>
+        <div class="score-circle">
+          <span id="final-score-num">0</span>
+          <span class="score-denom" id="score-denom">/ 10</span>
+        </div>
+        <div class="stats-row">
+          <div class="stat-card">
+            <span class="stat-val" id="stat-correct">0</span>
+            <span class="stat-label">Correct</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-val" id="stat-wrong">0</span>
+            <span class="stat-label">Wrong</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-val" id="stat-pct">0%</span>
+            <span class="stat-label">Accuracy</span>
+          </div>
+        </div>
+        <div class="results-btns">
+          <button class="cta-btn" id="retry-btn">Play Again</button>
+          <button class="outline-btn" id="change-btn">Change Settings</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ERROR SCREEN -->
+    <section id="error" class="screen">
+      <div class="error-inner">
+        <span class="error-icon">⚠️</span>
+        <h2>Oops!</h2>
+        <p id="error-msg">Something went wrong fetching questions.</p>
+        <button class="cta-btn" id="error-retry">Try Again</button>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
 </html>
