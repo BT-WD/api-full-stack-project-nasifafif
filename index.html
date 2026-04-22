@@ -2,120 +2,58 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PopQuiz — Culture Trivia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Celebrity Trivia</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div id="quiz-root">
 
-  <div id="app">
+    <div id="loading">Loading questions...</div>
+    <div id="error" style="display:none"></div>
 
-    <!-- SPLASH SCREEN -->
-    <section id="splash" class="screen active">
-      <div class="splash-inner">
-        <div class="logo-ring">
-          <span class="logo-icon">🎬</span>
-        </div>
-        <h1>PopQuiz</h1>
-        <p class="tagline">Celebrity, music, movies & more. <br>Think you know it all?</p>
-        <div class="difficulty-selector">
-          <label>Difficulty</label>
-          <div class="pill-group" id="difficulty-pills">
-            <button class="pill" data-val="easy">Easy</button>
-            <button class="pill active" data-val="medium">Medium</button>
-            <button class="pill" data-val="hard">Hard</button>
-          </div>
-        </div>
-        <div class="amount-selector">
-          <label>Questions</label>
-          <div class="pill-group" id="amount-pills">
-            <button class="pill" data-val="5">5</button>
-            <button class="pill active" data-val="10">10</button>
-            <button class="pill" data-val="15">15</button>
-          </div>
-        </div>
-        <button id="start-btn" class="cta-btn">Start Quiz</button>
+    <div id="quiz-screen" style="display:none">
+      <div id="header">
+        <h2>Celebrity Trivia</h2>
+        <span id="score-badge">Score: 0</span>
       </div>
-    </section>
-
-    <!-- LOADING SCREEN -->
-    <section id="loading" class="screen">
-      <div class="loader-wrap">
-        <div class="spinner"></div>
-        <p>Fetching questions…</p>
+      <div id="progress-bar-wrap">
+        <div id="progress-bar" style="width:0%"></div>
       </div>
-    </section>
-
-    <!-- QUIZ SCREEN -->
-    <section id="quiz" class="screen">
-      <header class="quiz-header">
-        <div class="progress-meta">
-          <span id="q-counter">Q 1 / 10</span>
-          <span id="score-live">Score: 0</span>
-        </div>
-        <div class="progress-bar-wrap">
-          <div class="progress-bar" id="progress-bar"></div>
-        </div>
-      </header>
-
-      <div class="question-card" id="question-card">
-        <div class="q-category" id="q-category">Entertainment</div>
-        <p class="q-text" id="q-text">Question goes here?</p>
-        <div class="answers-grid" id="answers-grid"></div>
+      <div id="question-card">
+        <div id="q-meta"></div>
+        <div id="q-text"></div>
       </div>
+      <div id="answers"></div>
+      <div id="feedback"></div>
+      <button id="next-btn">Next question →</button>
+    </div>
 
-      <div class="feedback-overlay hidden" id="feedback-overlay">
-        <div class="feedback-box" id="feedback-box">
-          <span class="feedback-icon" id="feedback-icon"></span>
-          <p class="feedback-msg" id="feedback-msg"></p>
-          <button class="next-btn" id="next-btn">Next →</button>
+    <div id="result-screen" style="display:none">
+      <div id="score-ring">
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="60" cy="60" r="52" fill="none" stroke="#e8e8e8" stroke-width="10"/>
+          <circle id="ring-arc" cx="60" cy="60" r="52" fill="none" stroke="#7F77DD"
+            stroke-width="10" stroke-linecap="round"
+            stroke-dasharray="326.7" stroke-dashoffset="326.7"/>
+        </svg>
+        <div class="ring-text">
+          <span class="ring-num" id="final-score">0</span>
+          <span class="ring-denom">of 9</span>
         </div>
       </div>
-    </section>
-
-    <!-- RESULTS SCREEN -->
-    <section id="results" class="screen">
-      <div class="results-inner">
-        <div class="trophy" id="trophy-emoji">🏆</div>
-        <h2 id="results-headline">Incredible!</h2>
-        <p class="results-sub" id="results-sub">You aced the quiz.</p>
-        <div class="score-circle">
-          <span id="final-score-num">0</span>
-          <span class="score-denom" id="score-denom">/ 10</span>
-        </div>
-        <div class="stats-row">
-          <div class="stat-card">
-            <span class="stat-val" id="stat-correct">0</span>
-            <span class="stat-label">Correct</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-val" id="stat-wrong">0</span>
-            <span class="stat-label">Wrong</span>
-          </div>
-          <div class="stat-card">
-            <span class="stat-val" id="stat-pct">0%</span>
-            <span class="stat-label">Accuracy</span>
-          </div>
-        </div>
-        <div class="results-btns">
-          <button class="cta-btn" id="retry-btn">Play Again</button>
-          <button class="outline-btn" id="change-btn">Change Settings</button>
-        </div>
+      <h2 id="result-heading">Quiz complete!</h2>
+      <p id="result-sub"></p>
+      <div id="result-breakdown">
+        <div class="stat-card"><div class="val correct-val" id="stat-correct">0</div><div class="lbl">Correct</div></div>
+        <div class="stat-card"><div class="val wrong-val" id="stat-wrong">0</div><div class="lbl">Wrong</div></div>
+        <div class="stat-card"><div class="val" id="stat-pct">0%</div><div class="lbl">Accuracy</div></div>
       </div>
-    </section>
-
-    <!-- ERROR SCREEN -->
-    <section id="error" class="screen">
-      <div class="error-inner">
-        <span class="error-icon">⚠️</span>
-        <h2>Oops!</h2>
-        <p id="error-msg">Something went wrong fetching questions.</p>
-        <button class="cta-btn" id="error-retry">Try Again</button>
-      </div>
-    </section>
+      <button id="play-again">Play again</button>
+    </div>
 
   </div>
 
-  <script src="app.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
